@@ -293,3 +293,17 @@ Make the file executable
 ```
 chmod +x noip-dual-update.sh
 ```
+- Now to create the boot script for the DNS:
+
+```
+vim /etc/init.d/S99local
+```
+And replace the file contents with 
+
+```
+
+```
+Make the file executable
+```
+chmod +x /etc/init.d/S99local
+```
