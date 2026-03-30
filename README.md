@@ -69,7 +69,11 @@ Add 10M to rootfs or something, it should be enough
 
 Trust the git file (to avoid failing build script):
 
+```
 git config --global --add safe.directory /licheervnano
+```
+
+Build now:
 
 ```
 build_all
