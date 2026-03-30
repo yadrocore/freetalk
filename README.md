@@ -29,8 +29,12 @@ cd /licheervnano
 source build/cvisetup.sh
 ```
 
-Now add these Flags:
+Now edit this file:
 
+```
+vim /licheervnano/build/boards/sg200x/sg2002_licheervnano_sd/sg2002_licheervnano_sd_defconfig
+```
+Add these Flags to end of file:
 ```
 CONFIG_INET=y
 CONFIG_IPV6=y
@@ -41,9 +45,22 @@ CONFIG_WIREGUARD=y
 CONFIG_WIREGUARD_DEBUG=y
 ```
 
-To these files:
-/licheervnano/build/boards/sg200x/sg2002_licheervnano_sd/sg2002_licheervnano_sd_defconfig
-/licheervnano/build/.defconfig
+Also edit this file:
+```
+vim /licheervnano/build/.defconfig
+```
+
+Add these Flags to end of file:
+```
+CONFIG_INET=y
+CONFIG_IPV6=y
+CONFIG_IP6_NF_IPTABLES=y
+CONFIG_IPV6_ROUTER_PREF=y
+CONFIG_IPV6_OPTIMISTIC_DAD=y
+CONFIG_WIREGUARD=y
+CONFIG_WIREGUARD_DEBUG=y
+```
+
 
 Change rootfs partition size to be able to build:
 
