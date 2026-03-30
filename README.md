@@ -129,17 +129,48 @@ Run sync:
 sync
 ```
 
+### Configuring Encripted SSH (NOT OPTIONAL, YOU WILL GET INSTANTLY HACKED OTHERWISE)
+- To avoid being imediatly hacked by a russian (like I did in like 10 minutes of my server being up), we need to change ssh authentication method from password (which is "root") to ecription key.
+
+- Create a key on your Ubuntu PC:
+```
+ssh-keygen -t ed25519
+```
+This will create:
+```
+~/.ssh/id_ed25519      (private key)
+~/.ssh/id_ed25519.pub  (public key)
+```
+Now create a .ssh folder in the sd card rootfs:
+
+```
+mkdir -p /media/$USER/rootfs/.ssh
+chmod 700 /media/$USER/rootfs/.ssh
+```
+- Now copy the public key:
+```
+cat ~/.ssh/id_ed25519.pub
+```
+- And paste it in a new file called ~/.ssh/authorized_keys:
+```
+echo "<PRINTED_PUB_KEY>" >> /media/$USER/rootfs/.ssh/authorized_keys
+```
+
+Run sync:
+
+```
+sync
+```
+
 Now unmount and eject the sd card.
 
 Connect the sd card back into Lichee
 
 Turn Lichee on
 
-On your ubuntu computer run the default SSH for LICHEE RV (PASSWORD IS ROOT):
-
 ```
 ssh root@192.168.15.19
-root
+
 ```
 
 It should connect to board, now we can prepare the DNS (needed for static IP).
