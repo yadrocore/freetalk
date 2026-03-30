@@ -301,7 +301,7 @@ chmod +x noip-dual-update.sh
 ```
 vim /etc/init.d/S99local
 ```
-And replace the file contents with 
+Replace the file contents with:
 ```
 #!/bin/sh
 
@@ -402,3 +402,7 @@ Make the file executable
 ```
 chmod +x /etc/init.d/S99local
 ```
+Reboot the board and check the logs from noip-dual-update.sh to see if everithing is working (<MY_VERY_COOL_LOGFILE_LOCATION>.log that was defined set in previous steps).
+
+## Wireguard Server Setup
+
