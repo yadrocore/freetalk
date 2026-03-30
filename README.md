@@ -150,14 +150,13 @@ It should connect to board, now we can prepare the DNS (needed for static IP).
 - For my project, I used [https://www.noip.com/](https://www.noip.com/) to create my DNS domain (its free and can be created with fake personal data). Only issue with this service is that you need to login into the noip website to confirm that your domain is still active every 30 days.
 - Now that you have the DNS we need to change some files in the server to ensure automatic DNS update and static lichee ip.
 - First we need to ensure that your router is ready to recieve an send udp data aswell as respect the lichee ip.
-- Login into your router via your ubuntu internet browser (every router is different) 
-
- - Reduce DHCP ip range to be ouside of the intended static ip (I am using 192.168.15.19 as the static ip for the board so I reduced my DHCP range to from 192.168.15.30 to  192.168.15.200)
- - Create a port fowarding rule for your wireguard (which is udp based):
-  - Protocol: UDP; External Ports: 51820 (could be any port compatible with wireguard, I just chose this one); Internal Ports: 51820; External IP: leave empty; Internal IP: 192.168.15.19 (lichee static ip I used)
- - Create a firewall rule to allow traffic trought this port:
-  - Protocol: UDP; Local Ports: 51820; Remote Ports: 51820; Remote IP: *; Local IP: 192.168.15.19
- - (optional): Enable a DMZ zone on the lichee static ip (192.168.15.19) if your router has that
+- Login into your router via your ubuntu internet browser (every router is different) and do these steps:
+    - Reduce DHCP ip range to be ouside of the intended static ip (I am using 192.168.15.19 as the static ip for the board so I reduced my DHCP range to from 192.168.15.30 to  192.168.15.200)
+	- Create a port fowarding rule for your wireguard (which is udp based):
+        - Protocol: UDP; External Ports: 51820 (could be any port compatible with wireguard, I just chose this one); Internal Ports: 51820; External IP: leave empty; Internal IP: 192.168.15.19 (lichee static ip I used)
+    - Create a firewall rule to allow traffic trought this port:
+        - Protocol: UDP; Local Ports: 51820; Remote Ports: 51820; Remote IP: *; Local IP: 192.168.15.19
+    - (optional): Enable a DMZ zone on the lichee static ip (192.168.15.19) if your router has that
 
 
 
@@ -339,7 +338,54 @@ stop() {
 case "$1" in
     start)
         start
+        ;;#!/bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+PIDFILE=/var/run/noip-dual-update.pid
+INTERVAL=600   # seconds (600 = 10 minutes)
+
+start() {
+    if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+        echo "noip-dual-update already running"
+        return
+    fi
+
+    (
+        echo $$ > "$PIDFILE"
+
+        # wait a bit after boot
+        sleep 30
+
+        while true; do
+            /usr/bin/noip-dual-update.sh >/dev/null 2>&1
+            sleep "$INTERVAL"
+        done
+    ) &
+}
+
+stop() {
+    if [ -f "$PIDFILE" ]; then
+        kill "$(cat "$PIDFILE")" 2>/dev/null
+        rm -f "$PIDFILE"
+    fi
+}
+
+case "$1" in
+    start)
+        start
         ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        sleep 2
+        start
+        ;;
+esac
+
+exit 0
+
     stop)
         stop
         ;;
