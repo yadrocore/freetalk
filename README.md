@@ -403,5 +403,114 @@ chmod +x /etc/init.d/S99local
 ```
 Reboot the board and check the logs from noip-dual-update.sh to see if everithing is working (<MY_VERY_COOL_LOGFILE_LOCATION>.log that was defined set in previous steps).
 
+
+## Writing the firewall
+
+- It is very simple to write firewall rules on a barebones linux.
+- To check current firewall status:
+```
+iptables -L -v -n
+```
+- Create a new firewall setup script:
+```
+touch /usr/bin/firewall_wg.sh
+vim /usr/bin/firewall_wg.sh
+```
+- Copy this to /usr/bin/firewall_wg.sh:
+```
+#!/bin/sh
+set -e
+
+WG_IF=wg0
+WG_PORT=51820
+APP_PORT=9000
+############################
+# Flush everything
+############################
+iptables -F
+iptables -X
+ip6tables -F
+ip6tables -X
+
+############################
+# Default deny
+############################
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+ip6tables -P INPUT DROP
+ip6tables -P FORWARD DROP
+ip6tables -P OUTPUT DROP
+
+############################
+# Loopback
+############################
+iptables -A INPUT  -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+
+ip6tables -A INPUT  -i lo -j ACCEPT
+ip6tables -A OUTPUT -o lo -j ACCEPT
+
+############################
+# Established / related
+############################
+iptables -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+ip6tables -A INPUT  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+ip6tables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+############################
+# WireGuard
+############################
+iptables -A INPUT  -p udp --dport $WG_PORT -j ACCEPT
+iptables -A OUTPUT -p udp --dport $WG_PORT -j ACCEPT
+
+
+iptables -A INPUT -i  $WG_IF -p tcp --dport $APP_PORT -m conntrack --ctstate NEW -j ACCEPT
+iptables -A OUTPUT -o $WG_IF -p tcp --dport $APP_PORT -m conntrack --ctstate NEW -j ACCEPT
+
+
+############################
+# NTP
+############################
+iptables -A OUTPUT -p udp --dport 123 -j ACCEPT
+
+############################
+# DNS (REQUIRED for DDNS)
+############################
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+
+############################
+# HTTPS (DDNS + ipify)
+############################
+iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+
+############################
+# Kill SSH explicitly
+############################
+#iptables -A INPUT -p tcp --dport 22 -j DROP
+#ip6tables -A INPUT -p tcp --dport 22 -j DROP
+
+########################
+# Keeping ssh alive (remove after for security)
+########################
+iptables -A INPUT  -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
+#iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
+
+############################
+# Optional logging (last)
+############################
+iptables -A INPUT  -j LOG --log-prefix "FW DROP IN: " --log-level 4
+iptables -A OUTPUT -j LOG --log-prefix "FW DROP OUT: " --log-level 4
+```
+Make the file executable
+```
+chmod +x /usr/bin/firewall_wg.sh
+```
+
 ## Wireguard Server Setup
 
