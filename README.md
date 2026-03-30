@@ -1,17 +1,21 @@
 # Intro
-My personal project to  attemp to create a secure chat platform with encription, server blindness and fully open source toolchain.  
+My personal project to create a secure chat platform with encription, server blindness and fully open source toolchain.  
 
 # Features
  - No Logins, security is based on private public key pairing
  - Based on wireguard (open source VPN)
  - Runs on barebones linux
  - Compatible with RISCV arch
-
+   
+# Pre-requisites
+ - Ubuntu computer with docker and wireguard installed
+ - Something that can run linux and have internet support to be the server
+   
 # Server
- - This is the riscv server hardware that I used [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html)
- 
+ - Riscv server hardware that I used [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html).
+ - 
 ## Building the Linux Kernel for The RV Nano
- - Based on sipeed documentation to build the linux kernel (This was done on Ubunutu):
+ - Using sipeed documentation, I built my own linux kernel (This was done on a Ubunutu machine):
  
 ```
 git clone https://github.com/sipeed/LicheeRV-Nano-Build --depth=1
