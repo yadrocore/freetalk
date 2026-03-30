@@ -13,7 +13,6 @@ My personal project to create a secure chat platform with encription, server bli
    
 # Server
  - Riscv server hardware that I used [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html).
- - 
 ## Building the Linux Kernel for The RV Nano
  - Using sipeed documentation, I built my own linux kernel (This was done on a Ubunutu machine):
  
