@@ -206,6 +206,13 @@ ntpd -gq -p pool.ntp.org
 ntpd -p pool.ntp.org &
 
 ```
+Make the file executable
+```
+chmod +x /etc/init.d/S99local
+```
+
+
+
 - Create a new file to update the DNS:
 
 ```
@@ -284,5 +291,5 @@ LOGFILE="<MY_VERY_COOL_LOGFILE_LOCATION>.log"
 
 Make the file executable
 ```
-
+chmod +x noip-dual-update.sh
 ```
