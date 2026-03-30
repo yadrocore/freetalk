@@ -147,7 +147,7 @@ It should connect to board, now we can prepare the DNS (needed for static IP).
 - Now that you have the DNS we need to change some files in the server to ensure automatic DNS update and static lichee ip.
 - First we need to ensure that your router is ready to recieve an send udp data aswell as respect the lichee ip
 
-
+-- Reduce DHCP ip range to be ouside of the intended static ip (I am using 192.168.15.19 as the static Ip for the board so I reduced my DHCP range to be 192.168.15.30 to  192.168.15.200)
 
 - To do that we need two scripts, one to setup board real time clock and static ip and onther to update the dns IP
 - 
