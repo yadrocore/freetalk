@@ -1,5 +1,5 @@
 # Intro
-My personal project to  attemp to create a secure chat platform with secure encription and fully open source toolchain.  
+My personal project to  attemp to create a secure chat platform with encription, server blindness and fully open source toolchain.  
 
 # Features
  - No Logins, security is based on private public key pairing
