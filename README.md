@@ -65,7 +65,10 @@ CONFIG_WIREGUARD_DEBUG=y
 
 Change rootfs partition size to be able to build:
 
+```
 vim build/boards/sg200x/sg2002_licheervnano_sd/partition/partition_sd.xml
+```
+
 Add 10M to rootfs or something, it should be enough
 
 Trust the git file (to avoid failing build script):
