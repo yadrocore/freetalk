@@ -2,12 +2,13 @@
 My personal project to  attemp to create a secure chat platform with secure encription and fully open source toolchain.  
 
 # Features
+ - No Logins, security is based on private public key pairing
  - Based on wireguard (open source VPN)
  - Runs on barebones linux
  - Compatible with RISCV arch
 
 # Server
- - This is the server hardware that I used [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html)
+ - This is the riscv server hardware that I used [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html)
  
 ## Building the Linux Kernel for The RV Nano
  - Based on sipeed documentation to build the linux kernel (This was done on Ubunutu):
@@ -137,7 +138,16 @@ root
 
 It should connect to board, now we can prepare the DNS (needed for static IP).
 
+## DNS Config
 
+- For my project, I used [https://www.noip.com/](https://www.noip.com/) to create my DNS domain (its free and can be created with fake personal data). Only issue with this service is that you need to login into the noip website to confirm that your domain is still active every 30 days.
+- Now that you have the DNS we need to change some files in the server to ensure automatic DNS update and static lichee ip.
+- First we need to ensure that your router is ready to recieve an send udp data aswell as respect the lichee ip
+
+
+
+- To do that we need two scripts, one to setup board real time clock and static ip and onther to update the dns IP
+- 
 
 
 
