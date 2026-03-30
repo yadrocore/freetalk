@@ -160,11 +160,40 @@ It should connect to board, now we can prepare the DNS (needed for static IP).
 
 - Now we need to setup board real time clock, static ip and automatically update the dns IP.
 - While ssh to the server, edit this file:
-- 
 ```
 vim /etc/init.d/S99local
 ```
+- Add this to the end of the file:
+```
+# --- force static IP (added manually) ---
+IFACE=wlan0
+IP=192.168.15.19
+NETMASK=255.255.255.0
+GW=192.168.15.1
 
+# stop DHCP if running
+killall udhcpc 2>/dev/null
+
+# bring interface up with fixed IP
+ifconfig $IFACE $IP netmask $NETMASK up
+
+# ensure correct default route
+route del default 2>/dev/null
+route add default gw $GW
+
+killall ntpd 2>/dev/null
+sleep 1
+
+for i in $(seq 1 30); do
+	ping -c1 -W1 8.8.8.8 >/dev/null 2>&1 && break
+	sleep 1
+done
+
+ntpd -gq -p pool.ntp.org
+
+ntpd -p pool.ntp.org &
+
+```
 
 
 
