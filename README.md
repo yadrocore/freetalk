@@ -1,15 +1,15 @@
-## Intro
+# Intro
 My personal project to  attemp to create a secure chat platform with secure encription and fully open source toolchain.  
 
-## Features
+# Features
  - Based on wireguard (open source VPN)
  - Runs on barebones linux
  - Compatible with RISCV arch
 
-## Server
- - This is the server hardware [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html)
+# Server
+ - This is the server hardware that I used [RV Nano](https://wiki.sipeed.com/hardware/en/lichee/RV_Nano/1_intro.html)
  
-# Building the Kernel for The RV Nano
+## Building the Linux Kernel for The RV Nano
  - Based on sipeed documentation to build the linux kernel (This was done on Ubunutu):
  
 ```
