@@ -159,12 +159,24 @@ It should connect to board, now we can prepare the DNS (needed for static IP).
 
 
 - Now we need to setup board real time clock, static ip and automatically update the dns IP.
-- While ssh to the server, edit this file:
+- While ssh to the server, edit this boot file:
 ```
 vim /etc/init.d/S99local
 ```
-- Add this to the end of the file:
+- To force the fixed IP, and setup the real time clock during boot replace the file contents with:
 ```
+#!/bin/sh
+
+if [ "${1}" = "start" ]
+then
+	if [ ! -e /boot/rclocal.disable ]
+	then
+		sh /etc/rc.local &
+	fi
+fi
+
+[ ! -s /tmp/resolv.conf ] && echo nameserver 8.8.8.8 > /tmp/resolv.conf
+
 # --- force static IP (added manually) ---
 IFACE=wlan0
 IP=192.168.15.19
