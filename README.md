@@ -299,9 +299,54 @@ chmod +x noip-dual-update.sh
 vim /etc/init.d/S99local
 ```
 And replace the file contents with 
-
 ```
+#!/bin/sh
 
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+PIDFILE=/var/run/noip-dual-update.pid
+INTERVAL=600   # seconds (600 = 10 minutes)
+
+start() {
+    if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+        echo "noip-dual-update already running"
+        return
+    fi
+
+    (
+        echo $$ > "$PIDFILE"
+
+        # wait a bit after boot
+        sleep 30
+
+        while true; do
+            /usr/bin/noip-dual-update.sh >/dev/null 2>&1
+            sleep "$INTERVAL"
+        done
+    ) &
+}
+
+stop() {
+    if [ -f "$PIDFILE" ]; then
+        kill "$(cat "$PIDFILE")" 2>/dev/null
+        rm -f "$PIDFILE"
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        sleep 2
+        start
+        ;;
+esac
+
+exit 0
 ```
 Make the file executable
 ```
