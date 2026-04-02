@@ -206,9 +206,10 @@ Turn Lichee on
 ssh-keygen -f ~/.ssh/known_hosts -R 192.168.15.19
 ```
 
+Finally, connect to board with:
+
 ```
 ssh root@192.168.15.19
-
 ```
 
 It should connect to board, now we can prepare the DNS (needed for static IP).
