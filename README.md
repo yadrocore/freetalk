@@ -148,8 +148,8 @@ This will create:
 Now create a .ssh folder in the sd card rootfs:
 
 ```
-mkdir -p /media/$USER/rootfs/.ssh
-chmod 700 /media/$USER/rootfs/.ssh
+mkdir -p /media/$USER/rootfs/root/.ssh
+chmod 700 /media/$USER/rootfs/root/.ssh
 ```
 - Now copy the public key:
 ```
