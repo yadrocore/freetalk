@@ -122,6 +122,11 @@ network={
   key_mgmt=WPA-PSK
 }
 ```
+```
+sudo chown -R 0:0 /mnt/rootfs/etc/wpa_supplicant.conf
+sudo chmod 777 /mnt/rootfs/etc/wpa_supplicant.conf
+```
+
 
 Run sync:
 
@@ -151,12 +156,39 @@ chmod 700 /media/$USER/rootfs/.ssh
 ```
 cat ~/.ssh/id_ed25519.pub
 ```
-- And paste it in a new file called ~/.ssh/authorized_keys:
+- And paste THE ENTIRE CAT OUTPUT it in a new file called ~/.ssh/authorized_keys:
 ```
-echo "<PRINTED_PUB_KEY>" >> /media/$USER/rootfs/.ssh/authorized_keys
+echo "<CAT_OUTPUT>" >> /media/$USER/rootfs/root/.ssh/authorized_keys
+```
+- Change ownlership of keys folder
+```
+sudo chown -R 0:0 /media/gabriel/rootfs/root/.ssh
+sudo chmod 700 /media/gabriel/rootfs/root/.ssh
+sudo chmod 600 /media/gabriel/rootfs/root/.ssh/authorized_keys
 ```
 
-Run sync:
+
+ - Now blocking password ssh and enabling key ssh:
+```
+vim /media/$USER/rootfs/etc/ssh/sshd_config
+```
+- Replace and set these lines:
+
+```
+PasswordAuthentication no
+PubkeyAuthentication yes
+
+AuthorizedKeysFile .ssh/authorized_keys
+
+MaxAuthTries 10
+
+AllowTcpForwarding no
+X11Forwarding no
+PermitTunnel no
+```
+
+
+Run sync and:
 
 ```
 sync
@@ -167,6 +199,13 @@ Now unmount and eject the sd card.
 Connect the sd card back into Lichee
 
 Turn Lichee on
+
+
+
+- On Ubunut computer, add lichee to known hosts:
+```
+ssh-keygen -f ~/.ssh/known_hosts -R 192.168.15.19
+```
 
 ```
 ssh root@192.168.15.19
