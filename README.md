@@ -106,13 +106,12 @@ sync
 Edit the wifi configuration file on your mounted sd card folder to inlcude your home network (will be used for ssh to server):
 
 ```
-vim /mnt/rootfs/etc/wpa_supplicant.conf
+vim /media/$USER/rootfs/rootfs/etc/wpa_supplicant.conf
 ```
 
 Should look something like this:
 
 ```
-# cat /etc/wpa_supplicant.conf 
 ctrl_interface=/var/run/wpa_supplicant
 ap_scan=1
 
@@ -123,8 +122,8 @@ network={
 }
 ```
 ```
-sudo chown -R 0:0 /mnt/rootfs/etc/wpa_supplicant.conf
-sudo chmod 777 /mnt/rootfs/etc/wpa_supplicant.conf
+sudo chown -R 0:0 /media/$USER/rootfs/etc/wpa_supplicant.conf
+sudo chmod 777 /media/$USER/rootfs/etc/wpa_supplicant.conf
 ```
 
 
@@ -162,9 +161,9 @@ echo "<CAT_OUTPUT>" >> /media/$USER/rootfs/root/.ssh/authorized_keys
 ```
 - Change ownlership of keys folder
 ```
-sudo chown -R 0:0 /media/gabriel/rootfs/root/.ssh
-sudo chmod 700 /media/gabriel/rootfs/root/.ssh
-sudo chmod 600 /media/gabriel/rootfs/root/.ssh/authorized_keys
+sudo chown -R 0:0 /media/$USERrootfs/root/.ssh
+sudo chmod 700 /media/$USER/rootfs/root/.ssh
+sudo chmod 600 /media/$USER/rootfs/root/.ssh/authorized_keys
 ```
 
 
