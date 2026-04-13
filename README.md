@@ -8,7 +8,7 @@ My personal project to create a secure chat platform with encription, server bli
  - No Logins, security is based on private public key pairing
  - Based on wireguard (open source VPN)
  - Runs on barebones linux
- - Compatible with RISCV arch
+ - Tested on RISCV arch
    
 # Pre-requisites
  - Ubuntu computer with docker and wireguard installed
