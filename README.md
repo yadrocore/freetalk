@@ -1,5 +1,8 @@
 # Intro
-My personal project to create a secure chat platform with encription, server blindness and fully open source toolchain.  
+My personal project to create a secure chat platform with encription, server blindness to data packages and fully open source toolchain.
+
+<img width="913" height="883" alt="cripto_com drawio" src="https://github.com/user-attachments/assets/f7824032-1f2a-4348-bab4-ab763ae424d6" />
+
 
 # Features
  - No Logins, security is based on private public key pairing
