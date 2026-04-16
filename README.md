@@ -124,6 +124,7 @@ network={
   key_mgmt=WPA-PSK
 }
 ```
+- Change the ownership of wifi file:
 ```
 sudo chown -R 0:0 /media/$USER/rootfs/etc/wpa_supplicant.conf
 sudo chmod 777 /media/$USER/rootfs/etc/wpa_supplicant.conf
@@ -212,7 +213,7 @@ or
 nmap -sn 192.168.1.0/24
 ```
 
-- On Ubunut computer, add lichee (mine had the ipv4 of 192.168.15.19) to known hosts:
+- On Ubunut computer, add lichee to known hosts (mine had the ipv4 of 192.168.15.19):
   
 ```
 ssh-keygen -f ~/.ssh/known_hosts -R 192.168.15.19
@@ -228,7 +229,7 @@ It should connect to board, now we can prepare the DNS (needed for static IP).
 
 ## DNS Config
 
-- For my project, I used [https://www.noip.com/](https://www.noip.com/) to create my DNS domain (its free and can be created with fake personal data). Only issue with this service is that you need to login into the noip website to confirm that your domain is still active every 30 days.
+- For my project, I used [https://www.noip.com/](https://www.noip.com/) to create my DNS domain (its free and can be created with fake personal data). Only issue with this service is that you need to login into the noip website to confirm that your domain is still active every 30 days. If you wnat to use a different DNS domain that is ok since my code is agnostic to DNS service.
 - Now that you have the DNS we need to change some files in the server to ensure automatic DNS update and static lichee ip.
 - First we need to ensure that your router is ready to recieve an send udp data aswell as respect the lichee ip.
 - Login into your router via your ubuntu internet browser (every router is different) and do these steps:
