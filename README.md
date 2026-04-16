@@ -196,15 +196,24 @@ Run sync and:
 sync
 ```
 
-Now unmount and eject the sd card.
+- Now unmount and eject the sd card.
 
-Connect the sd card back into Lichee
+- Connect the sd card back into Lichee
 
-Turn Lichee on
+- Turn Lichee on
 
+- Find what is the IPV4 of the board with arp or nmap:
 
+```
+arp -a
+```
+or
+```
+nmap -sn 192.168.1.0/24
+```
 
-- On Ubunut computer, add lichee to known hosts:
+- On Ubunut computer, add lichee (mine was had the ipv4 of 192.168.15.19) to known hosts:
+  
 ```
 ssh-keygen -f ~/.ssh/known_hosts -R 192.168.15.19
 ```
