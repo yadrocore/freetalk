@@ -632,10 +632,25 @@ chmod 755 /bin/destroy-wg.sh
 ```
 mkdir -p /root/wg_clientlist
 ```
-- Create a script to automatically add clients to the active wireguard interface
+- Create a script to automatically setup firewall, create wg interface and add clients to the active wireguard interface
   
 ```
+echo "#!/bin/sh
 
+set -e
+
+/usr/bin/firewall_wg.sh
+
+/usr/bin/setup-wg.sh
+
+CLIENT_DIR="/root/wg_clientlist"
+
+for script in "$CLIENT_DIR"/*.sh; do
+	[ -x "$script" ] || continue
+	echo "Running $script"
+	"$script"
+done" >> /bin/setup_wg_server.sh
+chmod 755 
 ```
 
 # Client 
