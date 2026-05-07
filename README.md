@@ -597,7 +597,7 @@ chmod +x /usr/bin/firewall_wg.sh
 
 ## Wireguard Server Setup
 
-- Create pubic and private wireguard server keys (on server PC):
+- Create public and private wireguard server keys (on server PC):
 
 ```
 mkdir -p /etc/wireguard
