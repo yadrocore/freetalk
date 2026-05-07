@@ -632,7 +632,11 @@ chmod 755 /bin/destroy-wg.sh
 ```
 mkdir -p /root/wg_clientlist
 ```
+- Create a script to automatically add clients to the active wireguard interface
+  
+```
 
+```
 
 # Client 
 
