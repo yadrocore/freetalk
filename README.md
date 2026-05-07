@@ -628,3 +628,13 @@ ip link set wg0 down
 ip link delete dev wg0" >> /bin/destroy-wg.sh
 chmod 755 /bin/destroy-wg.sh
 ```
+- Create a client directory in the server
+```
+mkdir -p /root/wg_clientlist
+```
+
+
+# Client 
+
+- Client is responsible for creating its own "wireguard config file" and "server client file" using the wireguard server public key. Afterwards, the client needs to share its client file with the server. 
+
