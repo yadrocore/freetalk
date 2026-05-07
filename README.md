@@ -248,7 +248,7 @@ It should connect to board, now we can prepare the DNS (needed for static IP).
 ```
 vim /etc/init.d/S99local
 ```
-- To force the fixed IP, and setup the real time clock during boot replace the file contents with:
+- To force the fixed IP, and setup the real time clock during boot replace the file contents with: (ntp flags might need to be updated to fix fail to sync issue)
 ```
 #!/bin/sh
 
