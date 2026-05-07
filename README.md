@@ -604,8 +604,7 @@ mkdir -p /etc/wireguard
 cd /etc/wireguard
 umask 077
 wg genkey > privatekey
+umask 022
 wg pubkey < privatekey > publickey
-
-chmod 600 privatekey
 ```
 
