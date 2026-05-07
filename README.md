@@ -602,7 +602,7 @@ chmod +x /usr/bin/firewall_wg.sh
 ```
 mkdir -p /etc/wireguard
 cd /etc/wireguard
-
+umask 077
 wg genkey > privatekey
 wg pubkey < privatekey > publickey
 
