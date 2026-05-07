@@ -608,3 +608,23 @@ umask 022
 wg pubkey < privatekey > publickey
 ```
 
+- Create a simple script to create the wireguard interface:
+```
+echo "#!/bin/sh
+
+ip link add dev wg0 type wireguard
+ip address add 10.0.0.1/24 dev wg0
+wg set wg0 private-key /etc/wireguard/privatekey listen-port 51820
+ip link set wg0 up" >> /bin/setup-wg.sh
+chmod 755 /bin/setup-wg.sh
+```
+
+
+- Create a simple script to destroy the wireguard interface:
+```
+echo "#!/bin/sh
+
+ip link set wg0 down
+ip link delete dev wg0" >> /bin/destroy-wg.sh
+chmod 755 /bin/destroy-wg.sh
+```
