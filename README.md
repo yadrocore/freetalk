@@ -657,3 +657,24 @@ chmod 755
 
 - Client is responsible for creating its own "wireguard config file" and "server client file" using the wireguard server public key. Afterwards, the client needs to share its client file with the server. 
 
+## Client Wireguard
+
+- Install wireguard and prepare key folders, on ubuntu you can use:
+```
+sudo apt update
+sudo apt install wireguard -y
+mkdir -p ~/wireguard
+```
+- Create wireguard keys:
+```
+cd ~/wireguard
+umask 077
+wg genkey > privatekey
+wg pubkey < privatekey > publickey
+chmod 755 publickey
+cat privatekey
+cat publickey
+umask 022
+```
+
+
